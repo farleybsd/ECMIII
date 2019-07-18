@@ -46,7 +46,7 @@
             };
 
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "/negociacoes", true);
+            xhr.open("POST", "http://localhost:3000/negociacoes", true);
             xhr.setRequestHeader("Content-type", "application/json");
             
             xhr.onreadystatechange = () => {
