@@ -63,6 +63,30 @@ class NegociacaoDao{
         })
     }
 
+    apagatodos(){
+
+        return new Promise((resolve,reject)=>{
+
+            
+            let request =  this._connection
+                .transaction([this._store],'readwrite')
+                .objectStore(this._store)
+                .clear()
+
+            request.onsuccess = e =>{
+                resolve('Negociacoes removidas com sucesso')
+            }
+
+            request.onerror = e =>{
+
+                console.log(e.targert.error)
+                reject('Não foi possivel remover as negociações')
+            }
+
+
+        })
+    }
+
 }
 
 
