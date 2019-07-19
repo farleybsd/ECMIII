@@ -82,15 +82,41 @@ class NegociacaoService {
     cadastra(negociacao)
     {
       return  ConnectionFactory
-        .getConnection()
-           .then(conection => 
-                  
-                  new NegociacaoDao(conection))  
-                    .then(dao => dao.adiciona(negociacao))
-                    .then(()=>'Negociacao Adiconada com Sucesso')
-                    .catch(() =>{
+              .getConnection()
+              .then(conection => new NegociacaoDao(conection))  
+              .then(dao => dao.adiciona(negociacao))
+              .then(()=>'Negociacao Adiconada com Sucesso')
+              .catch(() =>{
                         throw new Error ( 'Nao foi possivel adiconar uma negociacao')
                     }) 
+    }
+
+    lista(){
+
+        return  ConnectionFactory
+                .getConnection()
+                .then(conection => new NegociacaoDao(conection))  
+                .then(dao => dao.listaTodos())
+                .catch(erro => {
+                    console.log(erro)
+                    throw new Error('Nao Foi Possivel Adicionar uma negociação')
+                })
+                
+        
+    }
+
+    apaga(){
+
+        ConnectionFactory
+        .getConnection()
+        .then(connection => new NegociacaoDao(connection))
+        .then(dao => dao.apagatodos())
+        .then(() => 'Negociacoes apagada com sucesso')
+        .catch(erro =>{
+            console.log(erro)
+            throw new Error('Não foi possivel apagar as negociaçoes')
+        })
+
     }
 }
 
