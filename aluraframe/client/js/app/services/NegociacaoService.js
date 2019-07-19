@@ -107,7 +107,7 @@ class NegociacaoService {
 
     apaga(){
 
-        ConnectionFactory
+       return  ConnectionFactory
         .getConnection()
         .then(connection => new NegociacaoDao(connection))
         .then(dao => dao.apagatodos())
@@ -117,6 +117,20 @@ class NegociacaoService {
             throw new Error('Não foi possivel apagar as negociaçoes')
         })
 
+    }
+
+    importa(listaAtual)
+    {
+       return this.obterNegociacoes() 
+        .then(negociacoes => 
+            negociacoes.filter(negociacao => 
+            !listaAtual.some(negociacaoExistente =>
+                JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)))
+        )
+        .catch(erro => {
+            console.log(erro)
+            throw new Error('Não foi possivel buscar negociaçoes pra importar')
+        })
     }
 }
 
